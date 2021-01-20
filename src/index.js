@@ -1,5 +1,12 @@
 import './styles.css';
 import refs from "./js/refs";
+import createGalleryItemsMarkup from './js/create-gallery-items-markup';
+import apiService from './js/apiService';
+
+import "@pnotify/core/dist/PNotify.css"
+import '@pnotify/core/dist/BrightTheme.css';
+import { error } from "@pnotify/core";
+
 
 
 
@@ -7,16 +14,53 @@ import refs from "./js/refs";
 refs.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     const form = e.currentTarget;
-    const inputValue = form.elements.query.value;
-    console.log(inputValue);
+    
+    apiService.query = form.elements.query.value;
+    
+    refs.gallery.innerHTML = "";
+    form.reset();
+    apiService.resetPage();
+    refs.loadMoreBtn.classList.add('is-hidden');
 
-
-
-    const apiKey = '19957123-092fe89d59c01359f45ab382b';
-    const pageNumber = 1;
-    const url = `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${inputValue}&page=${pageNumber}&per_page=12&key=${apiKey}`;
-
-    fetch(url).then(res => res.json())
-        .then(({ hits }) =>
-            console.log(hits));
+    apiService.fetchGalleryItems()
+        .then(hits => {
+            createGalleryItemsMarkup(hits);
+        
+            if(hits.length === 0) {error({
+            title: 'No results were found for your request! Try again.',
+            hide: true,
+                delay: 2000
+            })
+            };
+            
+            if (hits.length > 0) {
+                refs.loadMoreBtn.classList.remove('is-hidden');
+                refs.clearBtn.classList.remove('is-hidden')
+            }
+        });
+    
 });
+
+refs.loadMoreBtn.addEventListener('click', () => {
+    
+   apiService.fetchGalleryItems()
+        .then(hits  => {
+            createGalleryItemsMarkup(hits);
+            const documentHeight = document.documentElement.offsetHeight;
+
+        window.scrollTo({
+            top: documentHeight,
+           
+        })
+            
+        });
+});
+
+refs.clearBtn.addEventListener('click', () => {
+    refs.gallery.innerHTML = "";
+    refs.loadMoreBtn.classList.add('is-hidden');
+    refs.clearBtn.classList.add('is-hidden')
+
+})
+
+

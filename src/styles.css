@@ -1,5 +1,6 @@
 html {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 *,
@@ -9,6 +10,7 @@ html {
 }
 
 body {
+  background-color: #e4efe9;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -22,28 +24,54 @@ body {
   margin-top: 50px;
   width: 1200px;
 }
-
-.form-control {
-  width: 800px;
+.gallery {
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.country-card-container,
-.country-card-container-description-item {
+.photo-card {
+  margin-right: 25px;
+  margin-bottom: 25px;
+}
+
+.photo {
+  margin-bottom: 15px;
+}
+
+.stats-item {
+  color: grey;
+  margin-right: 15px;
   display: flex;
+  justify-content: baseline;
+}
+
+.material-icons {
+  padding-right: 15px;
+}
+
+.loadong-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.stats {
+  display: flex;
+  margin-right: 0px;
+  justify-content: center;
   align-items: center;
 }
 
-.country-card-container-description-item {
-  margin-bottom: 15px;
-
-  align-items: baseline;
+.is-hidden {
+  display: none;
 }
 
-.country-card-container-description-item-title,
-.country-card-container-description {
-  margin-right: 25px;
+.img-thumbnail {
+  width: 350px;
+  height: 300px;
+  object-fit: cover;
 }
 
-.languages {
-  margin-bottom: 15px;
+.button-container {
+  margin-bottom: 50px;
 }
